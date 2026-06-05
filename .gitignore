@@ -1,0 +1,32 @@
+# ─── Datasets grandes ───────────────────────────────────────────
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.feather
+*.pkl
+*.npy
+
+# Excepciones: muestras pequeñas sí van al repo
+!data/samples/*.csv
+
+# ─── Jupyter ────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ─── Python ─────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# ─── Sistema ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Archivos temporales ────────────────────────────────────────
+*.tmp
+*.log
