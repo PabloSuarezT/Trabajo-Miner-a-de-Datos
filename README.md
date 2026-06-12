@@ -54,6 +54,28 @@ jupyter notebook Hito2/00_carga_datos.ipynb
 
 ---
 
+## Correcciones metodológicas respecto al Hito 1
+
+Los siguientes errores y mejoras fueron identificados al iniciar el Hito 2. Es importante que el equipo los conozca para no repetirlos y para justificarlos en el informe.
+
+### Errores corregidos
+
+| # | Variable / Aspecto | Problema en Hito 1 | Corrección en Hito 2 |
+|---|--------------------|--------------------|----------------------|
+| 1 | `CODIGO_REGION_DOMICILIO` | Se usaba como variable numérica en clustering (región 13 > región 1 matemáticamente, sin sentido) | Se excluye del clustering; se analiza solo en post-hoc para describir los clusters |
+| 2 | `PTJE_NEM` y `PTJE_RANKING` | Se usaban ambos juntos (correlación = 0.991, casi idénticos — duplicación de información) | Se elimina `PTJE_NEM`; se usa solo `PTJE_RANKING` (siempre ≥ NEM, más informativo) |
+| 3 | Variable `migra` | El cálculo daba 100% de migración porque `REGION_SEDE` usa nombres cortos ("Metropolitana") y `CODIGO_REGION_DOMICILIO` usa códigos numéricos — nunca coincidían | Se mapean los nombres cortos a códigos numéricos antes de comparar. Resultado correcto: ~14% migra |
+
+### Mejoras incorporadas
+
+| # | Aspecto | Antes | Ahora |
+|---|---------|-------|-------|
+| 4 | `RAMA_EDUCACIONAL` | No se usaba en ningún experimento | Se convierte en `es_tecnico` (binaria 0/1) e incluye en todos los experimentos. Resultó ser la 2ª variable más importante en regresión (17%) |
+| 5 | Desbalance de clases (P3) | Los clasificadores no consideraban el desbalance (ratio 5.6x entre CRUCH y CFT) | Todos los modelos usan `class_weight='balanced'`; se reporta F1-macro como métrica principal en lugar de accuracy |
+| 6 | Formato de datos | Se trabajaba sobre CSVs crudos en cada ejecución | Se guardan Parquets procesados en `data/processed/` (~5x más pequeños, ~10x más rápidos). El pipeline se divide en notebooks numerados con responsabilidades claras |
+
+---
+
 ## Preguntas de investigación
 
 | # | Tipo | Pregunta |
